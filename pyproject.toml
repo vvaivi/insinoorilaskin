@@ -29,6 +29,12 @@ packages = [
 authors = [
     "Aino ja Konsta"
 ]
+include = [
+    "src/insinoorilaskin/logger_config.toml",
+]
+
+[tool.poetry.scripts]
+insinoorilaskin = "insinoorilaskin.main:main"
 [tool.poetry.dependencies]
 python = "3.13.11"
 python-dotenv = "^1.2.1"
