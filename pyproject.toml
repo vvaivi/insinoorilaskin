@@ -1,0 +1,72 @@
+[build-system]
+requires = ["poetry-core>=1.2.0", "wheel",]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: not covered",
+    "@overload",
+]
+
+
+[tool.coverage.run]
+branch = true
+relative_files = true
+omit = [
+    ".tox/*",
+    "tests/*",
+]
+
+[tool.poetry]
+name = "insinoorilaskin"
+version = "0.1.0"
+description = "Insinöörilaskin."
+
+packages = [
+    { include = "insinoorilaskin", from = "src" },
+]
+authors = [
+    "Aino ja Konsta"
+]
+[tool.poetry.dependencies]
+python = "3.13.11"
+python-dotenv = "^1.2.1"
+tomli = { version = "^2.3.0", python = "<3.11" }
+
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.19.1"
+
+
+[tool.poetry.group.linters]
+optional = true
+
+
+[tool.poetry.group.linters.dependencies]
+ruff = "^0.14.10"
+
+
+[tool.poetry.group.tests]
+optional = true
+
+
+[tool.poetry.group.tests.dependencies]
+pytest = "^8.4.2"
+pytest-cov = "^7.0.0"
+tox = "^4.30.3"
+tox-gh-actions = "^3.5.0"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = """
+--doctest-modules \
+--cov=./ \
+--cov-append \
+--cov-report html:tests/reports/coverage-html \
+--cov-report xml:tests/reports/coverage.xml \
+--ignore=docs/
+"""
+testpaths = [
+    "tests",
+]
