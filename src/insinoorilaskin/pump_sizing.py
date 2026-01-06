@@ -32,6 +32,7 @@ K_L = 0         # sum of loss coefficients
 m = 1.5           # kg/s
 nu = 1.0034e-6  # m2/s
 mu = nu*rho     # dynamic viscosity
+p_s = 101325    # Pa, pressure at water surface
 
 
 # Pipe properties
@@ -57,3 +58,20 @@ h_dynamic = (f_D*L/D_H+K_L) * ((Q**2)/(2*g*A_c**2))
 print(h_dynamic, "m")
 
 
+# Pump net positive suction head calculations
+def calculate_NPSHa(p_s, rho, g, z_water, z_pump, h_L, p_v, NPSHr):
+    NPSHa = (p_s)/(rho*g) + (z_water-z_pump) - h_L - p_v/(rho*g)
+    if NPSHa > NPSHr:
+        print("Pump is safe to operate.")
+    else:
+        print("Pump is prone to cavitating")
+    return NPSHa
+
+z_water = 0
+z_pump = 5 # m
+#h_L = -0.1 # m
+h_L = h_dynamic
+NPSHr = 3 # m
+p_v = 2340 # Pa
+NPSHa = calculate_NPSHa(p_s, rho, g, z_water, z_pump, h_L, p_v, NPSHr)
+print("NPSHa:", NPSHa)
