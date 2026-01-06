@@ -14,7 +14,6 @@ def f_D_WhiteColebrook(D_H: float, epsilon: float, Re: float) -> float:
     elif Re <= 4000:
         f_D = (64/Re + 0.25*(np.log10((epsilon/D_H)/3.7 + 5.74/Re**0.9))**-2)/2
     else:
-        print("Turbulentti virtaus")
         def colebrook(f, Re, epsilon, D_H):
             
             return 1/np.sqrt(f) + 2*np.log10(
@@ -27,5 +26,4 @@ def f_D_WhiteColebrook(D_H: float, epsilon: float, Re: float) -> float:
             method='brentq')
         
         f_D = result.root
-        print("Kitkakerroin:", f_D)
     return f_D
