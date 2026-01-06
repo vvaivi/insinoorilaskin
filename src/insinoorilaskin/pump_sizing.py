@@ -21,7 +21,8 @@ g = 9.81        # m/s^2
 
 
 # Hydraulic system properties
-z1 = 2          # m
+z1 = 5         # m
+z_water = 0     # m water surface level
 z2 = 11         # m
 p1 = 1.5 * bar  # Pa
 p2 = 1 * bar    # Pa
@@ -50,12 +51,12 @@ f_D = ff.f_D_WhiteColebrook(D_H, epsilon, Re)
 
 # Static headloss
 h_static = z2-z1 + (p2-p1)/(rho*g) + (V_2**2 - V_1**2)/(2*g)
-print(np.round(h_static,2), "m")
+print("Static headloss:", np.round(h_static,2), "m")
 
 
 # Dynamic headloss
 h_dynamic = (f_D*L/D_H+K_L) * ((Q**2)/(2*g*A_c**2))
-print(h_dynamic, "m")
+print("Dynamic headloss:", h_dynamic, "m")
 
 
 # Pump net positive suction head calculations
@@ -67,11 +68,11 @@ def calculate_NPSHa(p_s, rho, g, z_water, z_pump, h_L, p_v, NPSHr):
         print("Pump is prone to cavitating")
     return NPSHa
 
-z_water = 0
-z_pump = 5 # m
+# Initial calculation properties
+z_pump = z1 # m
 #h_L = -0.1 # m
-h_L = h_dynamic
-NPSHr = 3 # m
-p_v = 2340 # Pa
+h_L = 0.1   # m, calculated with h_L or entered manually
+NPSHr = 3   # m, NPSH required by pump manufacturer
+p_v = 2340  # Pa, water partial pressure at calculated temp
 NPSHa = calculate_NPSHa(p_s, rho, g, z_water, z_pump, h_L, p_v, NPSHr)
 print("NPSHa:", NPSHa)
