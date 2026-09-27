@@ -12,13 +12,15 @@ Headloss and pump sizing calculation for
 import numpy as np
 from matplotlib import pyplot as plt
 import friction_factor as ff
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
 
-# General constants
-C2K = 273.15    # Celsius to Kelvin
-bar = 101325    # Pa
-g = 9.81        # m/s^2
-
+g = float(os.getenv("G"))          # m/s^2
+C2K = float(os.getenv("C2K"))
+bar = float(os.getenv("BAR"))
+p_s = float(os.getenv("P_ATM"))
 
 # Hydraulic system properties
 z1 = 5         # m
@@ -33,8 +35,6 @@ K_L = 0         # sum of loss coefficients
 m = 1.5           # kg/s
 nu = 1.0034e-6  # m2/s
 mu = nu*rho     # dynamic viscosity
-p_s = 101325    # Pa, pressure at water surface
-
 
 # Pipe properties
 L = 1000        # m
